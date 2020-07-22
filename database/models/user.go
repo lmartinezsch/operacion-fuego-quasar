@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/velopert/gin-rest-api-sample/lib/common"
+	"github.com/velopert/gin-rest-api/lib/common"
 )
 
 // User data model
