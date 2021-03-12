@@ -2,7 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
-	apiv1 "github.com/velopert/gin-rest-api/api/v1.0"
+	apiv1 "github.com/velopert/gin-rest-api-sample/api/v1.0"
 )
 
 // ApplyRoutes applies router to gin Router
