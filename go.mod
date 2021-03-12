@@ -18,9 +18,5 @@ require (
 	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/velopert/gin-rest-api-sample v0.0.0-20180731101943-f55a03f18d31
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
-	golang.org/x/net v0.0.0-20200707034311-ab3426394381 // indirect
-	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208 // indirect
 	google.golang.org/appengine v1.1.0 // indirect
-	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
-	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
 )

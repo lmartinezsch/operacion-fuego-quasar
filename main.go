@@ -7,9 +7,9 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
-	"github.com/lmartinezsch/operacion-fuego-quasar/api"
-	"github.com/lmartinezsch/operacion-fuego-quasar/database"
-	"github.com/lmartinezsch/operacion-fuego-quasar/lib/middlewares"
+	"github.com/velopert/gin-rest-api/api"
+	"github.com/velopert/gin-rest-api/database"
+	"github.com/velopert/gin-rest-api/lib/middlewares"
 )
 
 func main() {
