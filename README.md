@@ -1,3 +1,61 @@
+Registrar Usuario:
+
+POST http://localhost:4000/api/v1.0/auth/register
+Body:
+{
+    "username": "admin",
+	"password": "admin",
+	"display_name": "OFQ"
+}
+
+Loguear usuario:
+
+POST http://localhost:4000/api/v1.0/auth/login
+Body:
+{
+    "username": "admin",
+    "password": "admin"
+}
+
+Agregar Satelites:
+POST http://localhost:4000/api/v1.0/satellites
+Body:
+{
+    "name": "kenobi",
+    "position": {
+        "x": -500,
+        "y": -200
+    }
+}
+{
+    "name": "Skywalker",
+    "position": {
+        "x": 100,
+        "y": -100
+    }
+}
+{
+    "name": "Sato",
+    "position": {
+        "x": 500,
+        "y": 100
+    }
+}
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
 ## gin-rest-api-sample
 Golang REST API sample with MariaDB integration using Gin and GORM. (This project IS NOT a starter kit, it is just an example project.)
 
