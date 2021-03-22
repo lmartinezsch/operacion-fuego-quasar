@@ -6,10 +6,14 @@ import (
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/joho/godotenv"
-	"github.com/velopert/gin-rest-api/api"
-	"github.com/velopert/gin-rest-api/database"
-	"github.com/velopert/gin-rest-api/lib/middlewares"
+	"github.com/lmartinezsch/operacion-fuego-quasar/api"
+	"github.com/lmartinezsch/operacion-fuego-quasar/database"
+	"github.com/lmartinezsch/operacion-fuego-quasar/lib/middlewares"
+	"github.com/lmartinezsch/operacion-fuego-quasar/services"
+	"github.com/lmartinezsch/operacion-fuego-quasar/services/location"
+	"github.com/lmartinezsch/operacion-fuego-quasar/services/message"
 )
 
 func main() {
@@ -25,6 +29,8 @@ func main() {
 	port := os.Getenv("PORT")
 	app := gin.Default() // create gin app
 
+	registerServices(db)
+
 	app.Use(database.Inject(db))
 	app.Use(middlewares.JWTMiddleware())
 	app.Use(cors.New(cors.Config{
@@ -37,4 +43,16 @@ func main() {
 	}))
 	api.ApplyRoutes(app) // apply api router
 	app.Run(":" + port)  // listen to given port
+
+	defer services.DeregisterAll()
+}
+
+func registerServices(db *gorm.DB) {
+
+	locationService := location.NewService(db)
+	services.RegisterService(location.ServiceName, locationService)
+
+	messageService := message.NewService()
+	services.RegisterService(message.ServiceName, messageService)
+
 }

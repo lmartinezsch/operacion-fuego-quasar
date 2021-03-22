@@ -1,8 +1,9 @@
-module github.com/velopert/gin-rest-api
+module github.com/lmartinezsch/operacion-fuego-quasar
 
 go 1.14
 
 require (
+	github.com/Knetic/govaluate v3.0.0+incompatible
 	github.com/denisenkom/go-mssqldb v0.0.0-20200620013148-b91950f658ec // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5 // indirect
@@ -16,7 +17,6 @@ require (
 	github.com/lib/pq v1.7.1 // indirect
 	github.com/mattn/go-sqlite3 v1.14.0 // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
-	github.com/velopert/gin-rest-api-sample v0.0.0-20180731101943-f55a03f18d31
 	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
 	google.golang.org/appengine v1.1.0 // indirect
 )

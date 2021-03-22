@@ -9,8 +9,8 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/velopert/gin-rest-api/database/models"
-	"github.com/velopert/gin-rest-api/lib/common"
+	"github.com/lmartinezsch/operacion-fuego-quasar/database/models"
+	"github.com/lmartinezsch/operacion-fuego-quasar/lib/common"
 	"golang.org/x/crypto/bcrypt"
 )
 
