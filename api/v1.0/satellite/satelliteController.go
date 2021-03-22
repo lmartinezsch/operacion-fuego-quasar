@@ -1,41 +1,32 @@
-package posts
+package satellite
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	"github.com/lmartinezsch/operacion-fuego-quasar/database/models"
-	"github.com/lmartinezsch/operacion-fuego-quasar/lib/common"
 )
-
-// Post type alias
-type Post = models.Post
-
-// User type alias
-type User = models.User
-
-// JSON type alias
-type JSON = common.JSON
 
 func create(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
-	type RequestBody struct {
-		Text string `json:"text" binding:"required"`
-	}
-	var requestBody RequestBody
+	var r RequestBody
 
-	if err := c.BindJSON(&requestBody); err != nil {
+	if err := c.BindJSON(&r); err != nil {
 		c.AbortWithStatus(400)
 		return
 	}
 
-	user := c.MustGet("user").(User)
-	post := Post{Text: requestBody.Text, User: user}
-	db.NewRecord(post)
-	db.Create(&post)
-	c.JSON(200, post.Serialize())
+	satellite := Satellite{
+		Name: r.Name,
+		Position: Position{
+			X: r.Position.X,
+			Y: r.Position.Y,
+		},
+	}
+	db.NewRecord(satellite)
+	db.Create(&satellite)
+	c.JSON(200, satellite.Serialize())
 }
 
-func list(c *gin.Context) {
+/*func list(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 
 	cursor := c.Query("cursor")
@@ -137,3 +128,4 @@ func update(c *gin.Context) {
 	db.Save(&post)
 	c.JSON(200, post.Serialize())
 }
+*/

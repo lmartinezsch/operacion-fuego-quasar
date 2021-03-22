@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/velopert/gin-rest-api/lib/common"
+	"github.com/lmartinezsch/operacion-fuego-quasar/lib/common"
 )
 
 // Post data model
