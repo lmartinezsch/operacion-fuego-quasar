@@ -5,6 +5,17 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// Create Satellite godoc
+// @Summary Create Satellite
+// @Description post a satellite
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} SatelliteCreateResponse
+// @Header 200 {string} Token "qwerty"
+// @Failure 400,404
+// @Failure 500
+// @Failure default
+// @Router /satellites [post]
 func create(c *gin.Context) {
 	db := c.MustGet("db").(*gorm.DB)
 	var r RequestBody

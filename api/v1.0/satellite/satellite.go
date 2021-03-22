@@ -35,3 +35,11 @@ type RequestBody struct {
 	Name     string   `json:"name" binding:"required"`
 	Position Position `json:"position" binding:"required"`
 }
+
+type SatelliteCreateResponse struct {
+	Name     string `json:"name"`
+	Position struct {
+		X float32 `json:"x"`
+		Y float32 `json:"y"`
+	}
+}

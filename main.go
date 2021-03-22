@@ -16,6 +16,16 @@ import (
 	"github.com/lmartinezsch/operacion-fuego-quasar/services/message"
 )
 
+// @title Operación Fuego Quasar API
+// @version 1.0
+// @description Obtener la posición de una nave y su mensaje a partir de las distancias con los satelites
+
+// @contact.name Leandro Martinez
+// @contact.email leandro.martinez01@gmail.com
+
+// @host localhost:4000
+// @BasePath /api/v1
+// @query.collection.format multi
 func main() {
 	// load .env environment variables
 	err := godotenv.Load()

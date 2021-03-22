@@ -1,0 +1,85 @@
+basePath: /api/v1
+definitions:
+  satellite.SatelliteCreateResponse:
+    properties:
+      name:
+        type: string
+      position:
+        properties:
+          x:
+            type: number
+          "y":
+            type: number
+        type: object
+    type: object
+  topsecret.TopSecretResponse:
+    properties:
+      message:
+        type: string
+      position:
+        properties:
+          x:
+            type: number
+          "y":
+            type: number
+        type: object
+    type: object
+host: localhost:4000
+info:
+  contact:
+    email: leandro.martinez01@gmail.com
+    name: Leandro Martinez
+  description: Obtener la posición de una nave y su mensaje a partir de las distancias
+    con los satelites
+  title: Operación Fuego Quasar API
+  version: "1.0"
+paths:
+  /satellites:
+    post:
+      consumes:
+      - application/json
+      description: post a satellite
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/satellite.SatelliteCreateResponse'
+        "400":
+          description: ""
+        "404":
+          description: ""
+        "500":
+          description: ""
+        default:
+          description: ""
+      summary: Create Satellite
+  /topsecret:
+    post:
+      consumes:
+      - application/json
+      description: get position and message of ship
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/topsecret.TopSecretResponse'
+        "404":
+          description: ""
+        "500":
+          description: ""
+        default:
+          description: ""
+      summary: Get Top Secret
+swagger: "2.0"

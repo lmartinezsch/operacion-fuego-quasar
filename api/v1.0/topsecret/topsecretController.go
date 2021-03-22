@@ -4,13 +4,24 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// TopSecret godoc
+// @Summary Get Top Secret
+// @Description get position and message of ship
+// @Accept  json
+// @Produce  json
+// @Success 200 {object} TopSecretResponse
+// @Header 200 {string} Token "qwerty"
+// @Failure 404
+// @Failure 500
+// @Failure default
+// @Router /topsecret [post]
 func topSecret(c *gin.Context) {
 
 	var r RequestBody
 	var response TopSecretResponse
 
 	if err := c.BindJSON(&r); err != nil {
-		c.AbortWithStatus(400)
+		c.AbortWithStatus(404)
 		return
 	}
 
