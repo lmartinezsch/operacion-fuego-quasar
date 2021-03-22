@@ -1,0 +1,129 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Obtener la posición de una nave y su mensaje a partir de las distancias con los satelites",
+        "title": "Operación Fuego Quasar API",
+        "contact": {
+            "name": "Leandro Martinez",
+            "email": "leandro.martinez01@gmail.com"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:4000",
+    "basePath": "/api/v1",
+    "paths": {
+        "/satellites": {
+            "post": {
+                "description": "post a satellite",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create Satellite",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/satellite.SatelliteCreateResponse"
+                        },
+                        "headers": {
+                            "Token": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": ""
+                    },
+                    "404": {
+                        "description": ""
+                    },
+                    "500": {
+                        "description": ""
+                    },
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/topsecret": {
+            "post": {
+                "description": "get position and message of ship",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Top Secret",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/topsecret.TopSecretResponse"
+                        },
+                        "headers": {
+                            "Token": {
+                                "type": "string",
+                                "description": "qwerty"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    },
+                    "500": {
+                        "description": ""
+                    },
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "satellite.SatelliteCreateResponse": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "object",
+                    "properties": {
+                        "x": {
+                            "type": "number"
+                        },
+                        "y": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        },
+        "topsecret.TopSecretResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "position": {
+                    "type": "object",
+                    "properties": {
+                        "x": {
+                            "type": "number"
+                        },
+                        "y": {
+                            "type": "number"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
