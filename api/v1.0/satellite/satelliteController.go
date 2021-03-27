@@ -12,8 +12,7 @@ import (
 // @Description post a satellite
 // @Accept  json
 // @Produce  json
-// @Success 200 {object} SatelliteCreateResponse
-// @Header 200 {string} Token "qwerty"
+// @Success 200
 // @Failure 400,404
 // @Failure 500
 // @Failure default

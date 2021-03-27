@@ -39,16 +39,7 @@ var doc = `{
                 "summary": "Create Satellite",
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/satellite.SatelliteCreateResponse"
-                        },
-                        "headers": {
-                            "Token": {
-                                "type": "string",
-                                "description": "qwerty"
-                            }
-                        }
+                        "description": ""
                     },
                     "400": {
                         "description": ""
@@ -80,6 +71,35 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/topsecret.TopSecretResponse"
+                        }
+                    },
+                    "404": {
+                        "description": ""
+                    },
+                    "500": {
+                        "description": ""
+                    },
+                    "default": {
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/topsecret_split/:name": {
+            "get": {
+                "description": "get position and message of ship",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Get Top Secret Split",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/topsecret.TopSecretResponse"
                         },
                         "headers": {
                             "Token": {
@@ -98,29 +118,34 @@ var doc = `{
                         "description": ""
                     }
                 }
+            },
+            "post": {
+                "description": "Create SatelliteContact",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Create Top Secret Split",
+                "responses": {
+                    "201": {
+                        "description": ""
+                    },
+                    "404": {
+                        "description": ""
+                    },
+                    "500": {
+                        "description": ""
+                    },
+                    "default": {
+                        "description": ""
+                    }
+                }
             }
         }
     },
     "definitions": {
-        "satellite.SatelliteCreateResponse": {
-            "type": "object",
-            "properties": {
-                "name": {
-                    "type": "string"
-                },
-                "position": {
-                    "type": "object",
-                    "properties": {
-                        "x": {
-                            "type": "number"
-                        },
-                        "y": {
-                            "type": "number"
-                        }
-                    }
-                }
-            }
-        },
         "topsecret.TopSecretResponse": {
             "type": "object",
             "properties": {

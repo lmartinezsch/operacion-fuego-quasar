@@ -17,7 +17,6 @@ import (
 // @Accept  json
 // @Produce  json
 // @Success 200 {object} TopSecretResponse
-// @Header 200 {string} Token "qwerty"
 // @Failure 404
 // @Failure 500
 // @Failure default
@@ -49,7 +48,7 @@ func topSecret(c *gin.Context) {
 // @Description Create SatelliteContact
 // @Accept  json
 // @Produce  json
-// @Success 201 {object} TopSecretResponse
+// @Success 201
 // @Failure 404
 // @Failure 500
 // @Failure default
@@ -83,7 +82,7 @@ func createTopSecretSplit(c *gin.Context) {
 // @Failure 404
 // @Failure 500
 // @Failure default
-// @Router /topsecret_split/:name [post]
+// @Router /topsecret_split/:name [get]
 func getTopSecretSplit(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)

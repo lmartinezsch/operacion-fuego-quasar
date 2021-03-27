@@ -1,17 +1,5 @@
 basePath: /api/v1
 definitions:
-  satellite.SatelliteCreateResponse:
-    properties:
-      name:
-        type: string
-      position:
-        properties:
-          x:
-            type: number
-          "y":
-            type: number
-        type: object
-    type: object
   topsecret.TopSecretResponse:
     properties:
       message:
@@ -43,13 +31,7 @@ paths:
       - application/json
       responses:
         "200":
-          description: OK
-          headers:
-            Token:
-              description: qwerty
-              type: string
-          schema:
-            $ref: '#/definitions/satellite.SatelliteCreateResponse'
+          description: ""
         "400":
           description: ""
         "404":
@@ -61,6 +43,25 @@ paths:
       summary: Create Satellite
   /topsecret:
     post:
+      consumes:
+      - application/json
+      description: get position and message of ship
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/topsecret.TopSecretResponse'
+        "404":
+          description: ""
+        "500":
+          description: ""
+        default:
+          description: ""
+      summary: Get Top Secret
+  /topsecret_split/:name:
+    get:
       consumes:
       - application/json
       description: get position and message of ship
@@ -81,5 +82,21 @@ paths:
           description: ""
         default:
           description: ""
-      summary: Get Top Secret
+      summary: Get Top Secret Split
+    post:
+      consumes:
+      - application/json
+      description: Create SatelliteContact
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: ""
+        "404":
+          description: ""
+        "500":
+          description: ""
+        default:
+          description: ""
+      summary: Create Top Secret Split
 swagger: "2.0"
