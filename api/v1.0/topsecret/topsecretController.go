@@ -28,6 +28,7 @@ func topSecret(c *gin.Context) {
 	var response TopSecretResponse
 
 	if err := c.BindJSON(&r); err != nil {
+		log.Error("El request enviado no es correcto")
 		c.AbortWithStatus(404)
 		return
 	}
@@ -70,6 +71,7 @@ func topSecretSplit(c *gin.Context) {
 	r.Name = name
 
 	if err := c.BindJSON(&r); err != nil {
+		log.Error("El request enviado no es correcto")
 		c.AbortWithStatus(404)
 		return
 	}
@@ -77,6 +79,7 @@ func topSecretSplit(c *gin.Context) {
 	saveSatelliteContact(c, r, db)
 	satellites, err := getSatellitesContacts(c, db)
 	if err != nil {
+		log.Error(]"No se pudo obtener los contactos con los satelites")
 		c.AbortWithStatus(404)
 		return
 	}
@@ -110,6 +113,7 @@ func saveSatelliteContact(c *gin.Context, satelliteRequest SatelliteRequest, db 
 
 	// Find Satellite by name
 	if err := db.Set("gorm:auto_preload", true).Where("name = ?", satelliteRequest.Name).First(&Satellite).Error; err != nil {
+		log.Error("No se encontró el satelite: " + SatelliteRequest.Name)
 		c.AbortWithStatus(404)
 		return
 	}
@@ -121,6 +125,7 @@ func saveSatelliteContact(c *gin.Context, satelliteRequest SatelliteRequest, db 
 	}
 	jsonString, err := json.Marshal(datas)
 	if err != nil {
+		log.Error("No se pudo convertir a json el mensaje")
 		c.AbortWithStatus(404)
 		return
 	}
