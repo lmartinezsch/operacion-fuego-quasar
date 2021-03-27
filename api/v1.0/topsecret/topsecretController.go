@@ -79,7 +79,7 @@ func topSecretSplit(c *gin.Context) {
 	saveSatelliteContact(c, r, db)
 	satellites, err := getSatellitesContacts(c, db)
 	if err != nil {
-		log.Error(]"No se pudo obtener los contactos con los satelites")
+		log.Error("No se pudo obtener los contactos con los satelites")
 		c.AbortWithStatus(404)
 		return
 	}
@@ -113,7 +113,7 @@ func saveSatelliteContact(c *gin.Context, satelliteRequest SatelliteRequest, db 
 
 	// Find Satellite by name
 	if err := db.Set("gorm:auto_preload", true).Where("name = ?", satelliteRequest.Name).First(&Satellite).Error; err != nil {
-		log.Error("No se encontró el satelite: " + SatelliteRequest.Name)
+		log.Error("No se encontró el satelite: " + satelliteRequest.Name)
 		c.AbortWithStatus(404)
 		return
 	}

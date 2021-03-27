@@ -113,7 +113,6 @@ func login(c *gin.Context) {
 	// check existancy
 	var user User
 	if err := db.Where("username = ?", body.Username).First(&user).Error; err != nil {
-		log.error("Usuario no encontrado")
 		c.AbortWithStatus(404) // user not found
 		return
 	}
