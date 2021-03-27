@@ -20,12 +20,11 @@ require (
 	github.com/golang/protobuf v1.5.1 // indirect
 	github.com/jessevdk/go-flags v1.5.0 // indirect
 	github.com/jinzhu/gorm v1.9.1
-	github.com/jinzhu/inflection v0.0.0-20180308033659-04140366298a // indirect
 	github.com/jinzhu/now v1.1.1 // indirect
 	github.com/joho/godotenv v1.3.0
 	github.com/json-iterator/go v1.1.10 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
-	github.com/lib/pq v1.7.1 // indirect
+	github.com/lib/pq v1.7.1
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-sqlite3 v1.14.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
@@ -39,4 +38,5 @@ require (
 	golang.org/x/net v0.0.0-20210316092652-d523dce5a7f4 // indirect
 	golang.org/x/tools v0.1.0 // indirect
 	gopkg.in/go-playground/validator.v9 v9.31.0 // indirect
+	gorm.io/gorm v1.21.4
 )

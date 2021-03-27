@@ -2,6 +2,7 @@ package topsecret
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/lmartinezsch/operacion-fuego-quasar/database/models"
 	"github.com/lmartinezsch/operacion-fuego-quasar/lib/middlewares"
 	"github.com/lmartinezsch/operacion-fuego-quasar/services"
 	"github.com/lmartinezsch/operacion-fuego-quasar/services/location"
@@ -20,20 +21,28 @@ func ApplyRoutes(r *gin.RouterGroup) {
 	locationRegisteredService, _ := services.GetService(location.ServiceName)
 	locationService = locationRegisteredService.(location.Service)
 
-	posts := r.Group("/topsecret")
+	topsecret := r.Group("/topsecret")
 	{
-		posts.POST("/", middlewares.Authorized, topSecret)
+		topsecret.POST("/", middlewares.Authorized, topSecret)
+	}
+
+	topsecretSplit := r.Group("/topsecret_split")
+	{
+		topsecretSplit.POST("/:name", middlewares.Authorized, topSecretSplit)
 	}
 }
 
-type SatellitestRequest struct {
+// Satellite type alias
+type SatelliteContact = models.SatelliteContact
+
+type SatelliteRequest struct {
 	Name     string   `json:"name" binding:"required"`
 	Distance float32  `json:"distance" binding:"required"`
 	Message  []string `json:"message" binding:"required"`
 }
 
 type RequestBody struct {
-	Satellites []SatellitestRequest `json:"satellites" binding:"required"`
+	Satellites []SatelliteRequest `json:"satellites" binding:"required"`
 }
 
 type TopSecretResponse struct {
@@ -42,4 +51,9 @@ type TopSecretResponse struct {
 		Y float32 `json:"y"`
 	} `json:"position"`
 	Message string `json:"message"`
+}
+
+type TopSecretSplitRequestBody struct {
+	Distance float32  `json:"distance" binding:"required"`
+	Message  []string `json:"message" binding:"required"`
 }
