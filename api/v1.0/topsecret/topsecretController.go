@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	"github.com/lmartinezsch/operacion-fuego-quasar/database/models"
+	log "github.com/lmartinezsch/operacion-fuego-quasar/logger"
 )
 
 // TopSecret godoc
@@ -76,6 +77,12 @@ func topSecretSplit(c *gin.Context) {
 	saveSatelliteContact(c, r, db)
 	satellites, err := getSatellitesContacts(c, db)
 	if err != nil {
+		c.AbortWithStatus(404)
+		return
+	}
+
+	if len(satellites) < 3 {
+		log.Error("Deben existir 3 satelites por lo menos")
 		c.AbortWithStatus(404)
 		return
 	}

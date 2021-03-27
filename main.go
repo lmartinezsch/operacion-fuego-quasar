@@ -11,6 +11,7 @@ import (
 	"github.com/lmartinezsch/operacion-fuego-quasar/api"
 	"github.com/lmartinezsch/operacion-fuego-quasar/database"
 	"github.com/lmartinezsch/operacion-fuego-quasar/lib/middlewares"
+	log "github.com/lmartinezsch/operacion-fuego-quasar/logger"
 	"github.com/lmartinezsch/operacion-fuego-quasar/services"
 	"github.com/lmartinezsch/operacion-fuego-quasar/services/location"
 	"github.com/lmartinezsch/operacion-fuego-quasar/services/message"
@@ -32,6 +33,10 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	log.SetColors(true)
+	logLevel, _ := log.StringToLevel(os.Getenv("LOG_LEVEL"))
+	log.SetMode(*logLevel)
 
 	// initializes database
 	db, _ := database.Initialize()
