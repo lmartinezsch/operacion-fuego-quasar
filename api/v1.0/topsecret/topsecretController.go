@@ -3,6 +3,7 @@ package topsecret
 import (
 	"encoding/json"
 	"sort"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -25,7 +26,41 @@ func topSecret(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
 	var r RequestBody
-	var response TopSecretResponse
+
+	// Bind Request
+	if err := c.BindJSON(&r); err != nil {
+		log.Error("El request enviado no es correcto")
+		c.AbortWithStatus(404)
+		return
+	}
+
+	// Save Satellites
+	for _, satellite := range r.Satellites {
+		saveSatelliteContact(c, satellite, db)
+	}
+
+	response := getTopSecretResponse(c, db)
+
+	c.JSON(200, response)
+}
+
+// CreatTopSecretSplit godoc
+// @Summary Create Top Secret Split
+// @Description Create SatelliteContact
+// @Accept  json
+// @Produce  json
+// @Success 201 {object} TopSecretResponse
+// @Failure 404
+// @Failure 500
+// @Failure default
+// @Router /topsecret_split/:name [post]
+func createTopSecretSplit(c *gin.Context) {
+
+	db := c.MustGet("db").(*gorm.DB)
+	var r SatelliteRequest
+	name := c.Param("id")
+	// Add name to request
+	r.Name = strings.ToLower(name)
 
 	if err := c.BindJSON(&r); err != nil {
 		log.Error("El request enviado no es correcto")
@@ -33,24 +68,13 @@ func topSecret(c *gin.Context) {
 		return
 	}
 
-	for _, satelliteRequest := range r.Satellites {
-		saveSatelliteContact(c, satelliteRequest, db)
-	}
+	saveSatelliteContact(c, r, db)
 
-	x, y := locationService.GetLocation(r.Satellites[0].Distance, r.Satellites[1].Distance, r.Satellites[2].Distance)
-
-	//TODO: se debe pasar de otra forma los parámetros por si llegan a ser más salites
-	message := messageService.GetMessage(r.Satellites[0].Message, r.Satellites[1].Message, r.Satellites[2].Message)
-
-	response.Position.X = x
-	response.Position.Y = y
-	response.Message = message
-
-	c.JSON(200, response)
+	c.JSON(201, "")
 }
 
-// TopSecret godoc
-// @Summary Get Top Secret
+// GetTopSecretSplit godoc
+// @Summary Get Top Secret Split
 // @Description get position and message of ship
 // @Accept  json
 // @Produce  json
@@ -60,44 +84,10 @@ func topSecret(c *gin.Context) {
 // @Failure 500
 // @Failure default
 // @Router /topsecret_split/:name [post]
-func topSecretSplit(c *gin.Context) {
+func getTopSecretSplit(c *gin.Context) {
 
 	db := c.MustGet("db").(*gorm.DB)
-	var r SatelliteRequest
-	var response TopSecretResponse
-	var err error
-	name := c.Param("id")
-	// Add name to request
-	r.Name = name
-
-	if err := c.BindJSON(&r); err != nil {
-		log.Error("El request enviado no es correcto")
-		c.AbortWithStatus(404)
-		return
-	}
-
-	saveSatelliteContact(c, r, db)
-	satellites, err := getSatellitesContacts(c, db)
-	if err != nil {
-		log.Error("No se pudo obtener los contactos con los satelites")
-		c.AbortWithStatus(404)
-		return
-	}
-
-	if len(satellites) < 3 {
-		log.Error("Deben existir 3 satelites por lo menos")
-		c.AbortWithStatus(404)
-		return
-	}
-
-	x, y := locationService.GetLocation(satellites[0].Distance, satellites[1].Distance, satellites[2].Distance)
-
-	//TODO: se debe pasar de otra forma los parámetros por si llegan a ser más salites
-	message := messageService.GetMessage(convertMessageString(satellites[0].Message), convertMessageString(satellites[1].Message), convertMessageString(satellites[2].Message))
-
-	response.Position.X = x
-	response.Position.Y = y
-	response.Message = message
+	response := getTopSecretResponse(c, db)
 
 	c.JSON(200, response)
 }
@@ -145,17 +135,17 @@ func saveSatelliteContact(c *gin.Context, satelliteRequest SatelliteRequest, db 
 	}
 }
 
-func getSatellitesContacts(c *gin.Context, db *gorm.DB) ([]models.SatelliteContact, error) {
+func getSatellitesContacts(c *gin.Context, db *gorm.DB) []models.SatelliteContact {
 
 	var satelliteContacts []models.SatelliteContact
 
 	//Find all satellites
 	if err := db.Find(&satelliteContacts).Error; err != nil {
 		c.AbortWithStatus(500)
-		return nil, err
+		return nil
 	}
 
-	return satelliteContacts, nil
+	return satelliteContacts
 }
 
 func convertMessageString(messageString string) []string {
@@ -181,4 +171,27 @@ func convertMessageString(messageString string) []string {
 	}
 
 	return messageArray
+}
+
+func getTopSecretResponse(c *gin.Context, db *gorm.DB) *TopSecretResponse {
+
+	var response TopSecretResponse
+	satellites := getSatellitesContacts(c, db)
+
+	if len(satellites) < 3 {
+		log.Error("Deben existir 3 satelites por lo menos")
+		c.AbortWithStatus(404)
+		return nil
+	}
+
+	x, y := locationService.GetLocation(satellites[0].Distance, satellites[1].Distance, satellites[2].Distance)
+
+	//TODO: se debe pasar de otra forma los parámetros por si llegan a ser más salites
+	message := messageService.GetMessage(convertMessageString(satellites[0].Message), convertMessageString(satellites[1].Message), convertMessageString(satellites[2].Message))
+
+	response.Position.X = x
+	response.Position.Y = y
+	response.Message = message
+
+	return &response
 }

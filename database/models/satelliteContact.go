@@ -10,7 +10,7 @@ type SatelliteContact struct {
 	gorm.Model
 	Distance    float32
 	Message     string `gorm:"type:json"`
-	SatelliteID uint
+	SatelliteID uint   `gorm:"unique"`
 	Satellite   Satellite
 }
 

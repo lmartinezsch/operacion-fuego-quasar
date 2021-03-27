@@ -28,7 +28,8 @@ func ApplyRoutes(r *gin.RouterGroup) {
 
 	topsecretSplit := r.Group("/topsecret_split")
 	{
-		topsecretSplit.POST("/:name", middlewares.Authorized, topSecretSplit)
+		topsecretSplit.POST("/:name", middlewares.Authorized, createTopSecretSplit)
+		topsecretSplit.GET("/:name", middlewares.Authorized, getTopSecretSplit)
 	}
 }
 

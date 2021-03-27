@@ -1,6 +1,8 @@
 package satellite
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 )
@@ -26,7 +28,7 @@ func create(c *gin.Context) {
 	}
 
 	satellite := Satellite{
-		Name: r.Name,
+		Name: strings.ToLower(r.Name),
 		Position: Position{
 			X: r.Position.X,
 			Y: r.Position.Y,
@@ -34,5 +36,5 @@ func create(c *gin.Context) {
 	}
 	db.NewRecord(satellite)
 	db.Create(&satellite)
-	c.JSON(200, satellite.Serialize())
+	c.JSON(201, "")
 }
