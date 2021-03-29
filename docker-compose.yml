@@ -55,8 +55,10 @@ volumes:
 # Networks to be created to facilitate communication between containers
 networks:
   ofq:
-    ipam:
-      config:
-        - driver: default
-          subnet: ${ADDRESS_SUBNET}
-          gateway: ${ADDRESS_GATEWAY}
+    external:
+      true
+      #    ipam:
+      #      config:
+      #        - driver: default
+      #          subnet: ${ADDRESS_SUBNET}
+      #          gateway: ${ADDRESS_GATEWAY}
