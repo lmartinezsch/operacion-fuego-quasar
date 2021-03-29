@@ -1,125 +1,241 @@
-Registrar Usuario:
+# Operación Fuego Quasar
 
-POST http://localhost:4000/api/v1.0/auth/register
-Body:
+_Proyecto de evaluación para Mercado Libre_
+
+El algoritmo que encuentra las coordenadas de la nave se creó a partir de la fórmula de Trilateración como se indica en esta fuente: https://math.stackexchange.com/questions/884807/find-x-location-using-3-known-x-y-location-using-trilateration
+
+## Comenzando 🚀
+
+_Estas instrucciones te permitirán obtener una copia del proyecto en funcionamiento en tu máquina local para propósitos de desarrollo y pruebas._
+
+Mira **Deployment** para conocer como desplegar el proyecto.
+
+
+## Pre-requisitos 📋
+
+_Debes tener instalado Docker y Docker compose para poder levantar el proyecto en tu máquina_
+
+## Instalación 🔧
+
+_Clonamos el proyecto_
+```
+git clone git@github.com:lmartinezsch/operacion-fuego-quasar.git
+```
+
+_Una vez clonado y estando dentro del proyecto ejecutamos:_
+
+```
+docker-compose up -d --build
+```
+
+_Esto nos levantará 3 contenedores: ofq-app, ofq-mysql y ofq-phpmyadmin_
+
+En caso de que alguno de los contenedores falle: 
+1) crear un network con lo siguientes datos:  
+`docker network create --gateway 172.16.1.1 --subnet 172.16.1.0/24 ofq`  
+
+3) Reemplazar los datos del archivo .env por los de .env_local
+4) Reemplazar los datos del archivo docker-compose.yml por los de docker-compose_local.yml
+
+
+## REST API 🔧
+
+### PING
+Podemos corroborar si nuestra app está funcionando haciendo un GET:  
+
+```
+http://localhost:4000/api/v1.0/ping/
+```
+
+### Registrar usuario
+_Para poder utilizar la api debemos crear un usuario haciendo un POST con el siguiente request:_  
+`POST http://localhost:4000/api/v1.0/auth/register`  
+`Body:`   
+
+```
 {
-    "username": "admin",
-	"password": "admin",
-	"display_name": "OFQ"
+  "username": "admin",
+  "password": "admin",
+  "display_name": "OFQ"
 }
+```
 
-Loguear usuario:
+### Loguear usuario
+`POST http://localhost:4000/api/v1.0/auth/login`
+`BODY`
+```{ "username": "admin", "password": "admin" }```
 
-POST http://localhost:4000/api/v1.0/auth/login
-Body:
+### Agregar satelites
+_Se deben agregar 3 satélites para el correcto funcionamiento:_  
+
+`POST http://localhost:4000/api/v1.0/satellites`
+
+```
 {
-    "username": "admin",
-    "password": "admin"
+  "name": "kenobi",
+  "position": {
+    "x": -500,
+    "y": -200
+  }
 }
+```  
+`POST http://localhost:4000/api/v1.0/satellites`  
+```
+{
+  "name": "Skywalker",
+  "position": {
+    "x": 100,
+    "y": -100
+  }
+}
+```  
+`POST http://localhost:4000/api/v1.0/satellites`  
+```
+{
+  "name": "Sato",
+  "position": {
+    "x": 500,
+    "y": 100
+  }
+}
+```
 
-Agregar Satelites:
-POST http://localhost:4000/api/v1.0/satellites
-Body:
+## Top Secret
+_Se puede obtener las coordenadas de la nave y el mensaje secreto en el endpoint `topsecret`_  
+`POST http://localhost:4000/api/v1.0/topsecret`  
+Request Body:
+```
+{
+    "satellites": [
+        {
+            "name": "kenobi",
+            "distance": 485.41,
+            "message": [
+                "este",
+                "",
+                "",
+                "mensaje",
+                ""
+            ]
+        },
+        {
+            "name": "skywalker",
+            "distance": 265.75,
+            "message": [
+                "",
+                "es",
+                "",
+                "",
+                "secreto"
+            ]
+        },
+        {
+            "name": "sato",
+            "distance": 600.52,
+            "message": [
+                "este",
+                "",
+                "un",
+                "",
+                ""
+            ]
+        }
+    ]
+}
+```
+Response body:  
+```
+{
+    "position": {
+        "x": -100,
+        "y": 75
+    },
+    "message": "este es un mensaje secreto"
+}
+```
+
+### Top secret split CREATE
+_Se pueden setear los contactos a los satelites separados_  
+
+`POST http://localhost:4000/api/v1.0/topsecret_split/Kenobi`  
+Request Body:  
+```
 {
     "name": "kenobi",
-    "position": {
-        "x": -500,
-        "y": -200
-    }
+    "distance": 485.41,
+    "message": [
+        "este",
+        "",
+        "",
+        "mensaje",
+        ""
+    ]
 }
+```
+
+`POST http://localhost:4000/api/v1.0/topsecret_split/Skywalker`  
+Request Body:  
+```
 {
     "name": "Skywalker",
-    "position": {
-        "x": 100,
-        "y": -100
-    }
+    "distance": 265.75,
+    "message": [
+        "",
+        "es",
+        "",
+        "",
+        "secreto"
+    ]
 }
+```
+
+`POST http://localhost:4000/api/v1.0/topsecret_split/Sato`  
+Request Body:  
+```
 {
     "name": "Sato",
-    "position": {
-        "x": 500,
-        "y": 100
-    }
+    "distance": 600.52,
+    "message": [
+        "este",
+        "",
+        "un",
+        "",
+        ""
+    ]
 }
-
-
-
-
-
-
-
-
-
------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-## gin-rest-api-sample
-Golang REST API sample with MariaDB integration using Gin and GORM. (This project IS NOT a starter kit, it is just an example project.)
-
-This project is a sample project that contains following features:
-
-- REST API server with [Gin Framework](https://github.com/gin-gonic/gin)
-- Modular Routes
-- Database integration using [GORM](http://gorm.io/)
-- Live Reload using [codegangsta/gin](https://github.com/codegangsta/gin)
-- JWT Token based Authentication
-- [Supported REST API Documentation](https://documenter.getpostman.com/view/723994/RWTeVNA4) (Postman)
-
-
-## Project Setup
-
-```
-$ dep ensure
-$ go get github.com/jinzhu/gorm
-$ go get github.com/codegangsta/gin
 ```
 
-GORM should be installed via `go get` since installation via `dep` is imperfect (it does not download dialects directory).
-
-[codegangsta/gin](https://github.com/codegangsta/gin) is an optional package to install if you want to make usage of live reloading feature of server (just like nodemon in Node.js environment). 
-
-### MariaDB Configuration
-
-This project uses MariaDB to store data. Install MariaDB and create a sample database and a user account.
-
-#### Install MariaDB
-
-- [macOS](https://mariadb.com/kb/en/library/installing-mariadb-on-macos-using-homebrew/)
-- [Windows](https://mariadb.com/kb/en/library/installing-mariadb-msi-packages-on-windows/)
-- [Ubuntu](https://www.itzgeek.com/how-tos/linux/ubuntu-how-tos/install-mariadb-on-ubuntu-16-04.html)
-
-
-#### Create Database / Account
-```sql
-CREATE DATABASE sample;
-GRANT ALL PRIVILEGES ON sample.* to sample@'%' IDENTIFIED BY 'samplepass';
-GRANT ALL PRIVILEGES ON sample.* to sample@'localhost' IDENTIFIED BY 'samplepass';
+### Top secret split GET
+_Se obtienen las coordenadas y el mensaje secreto de la nave_  
+`GET http://localhost:4000/api/v1.0/topsecret_split/Sato`
+Response body:  
+```
+{
+    "position": {
+        "x": -100,
+        "y": 75
+    },
+    "message": "este es un mensaje secreto"
+}
 ```
 
-### Configure Environment Variables
 
-Open .env file and edit the values if you need to. This project uses [godotenv](https://github.com/joho/godotenv) to read and use .env file. 
+## Ejecutando las pruebas ⚙️
 
-Database config string is formatted in [go-sql-driver format](https://github.com/go-sql-driver/mysql#parameters).
+_Explica como ejecutar las pruebas automatizadas para este sistema_
 
-## Start Project
+### Analice las pruebas end-to-end 🔩
 
-```
-$ go run main.go
-```
-
-To explicitly compile the code before you run the server:
+_Explica que verifican estas pruebas y por qué_
 
 ```
-$ go build main.go
-$ ./main
+Da un ejemplo
 ```
 
-To use live-reloading in development environment, 
+### Y las pruebas de estilo de codificación ⌨️
+
+_Explica que verifican estas pruebas y por qué_
 
 ```
-$ ./scripts/start-dev
+Da un ejemplo
 ```
