@@ -3,6 +3,7 @@ module github.com/lmartinezsch/operacion-fuego-quasar
 go 1.14
 
 require (
+	github.com/Selvatico/go-mocket v1.0.7 // indirect
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/denisenkom/go-mssqldb v0.0.0-20200620013148-b91950f658ec // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
