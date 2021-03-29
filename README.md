@@ -11,27 +11,22 @@ Mira **Deployment** para conocer como desplegar el proyecto.
 
 ### Pre-requisitos 📋
 
-_Que cosas necesitas para instalar el software y como instalarlas_
-
-```
-Da un ejemplo
-```
+_Debes tener instalado Docker y Docker compose para poder levantar el proyecto en tu máquina_
 
 ### Instalación 🔧
 
-_Una serie de ejemplos paso a paso que te dice lo que debes ejecutar para tener un entorno de desarrollo ejecutandose_
-
-_Dí cómo será ese paso_
-
+_Clonamos el proyecto_
 ```
-Da un ejemplo
+git clone git@github.com:lmartinezsch/operacion-fuego-quasar.git
 ```
 
-_Y repite_
+_Una vez clonado y estando dentro del proyecto ejecutamos:_
 
 ```
-hasta finalizar
+docker-compose up -d --build
 ```
+
+_Esto nos levantará 3 contenedores: ofq-app, ofq-mysql y ofq-phpmyadmin_
 
 _Finaliza con un ejemplo de cómo obtener datos del sistema o como usarlos para una pequeña demo_
 
