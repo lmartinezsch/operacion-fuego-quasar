@@ -40,7 +40,44 @@ http://localhost:4000/api/v1.0/ping/
 ### Registrar usuario
 _Para poder utilizar la api debemos crear un usuario haciendo un POST con el siguiente request:_
 `POST http://localhost:4000/api/v1.0/auth/register`
-`Body: { "username": "admin", "password": "admin", "display_name": "OFQ" }`
+`Body:` 
+```{ "username": "admin", "password": "admin", "display_name": "OFQ" }```
+
+### Loguear usuario
+`POST http://localhost:4000/api/v1.0/auth/login`
+`BODY`
+```{ "username": "admin", "password": "admin" }```
+
+### Agregar satelites
+_Se deben agregar 3 satélites para el correcto funcionamiento_
+`POST http://localhost:4000/api/v1.0/satellites`
+```
+{
+  "name": "kenobi",
+  "position": {
+    "x": -500,
+    "y": -200
+  }
+}
+```
+```
+{
+  "name": "Skywalker",
+  "position": {
+    "x": 100,
+    "y": -100
+  }
+}
+```
+```
+{
+  "name": "Sato",
+  "position": {
+    "x": 500,
+    "y": 100
+  }
+}
+```
 
 
 ## Ejecutando las pruebas ⚙️
