@@ -37,6 +37,12 @@ Podemos corroborar si nuestra app está funcionando haciendo un GET:
 http://localhost:4000/api/v1.0/ping/
 ```
 
+### Registrar usuario
+_Para poder utilizar la api debemos crear un usuario haciendo un POST con el siguiente request:_
+`POST http://localhost:4000/api/v1.0/auth/register`
+`Body: { "username": "admin", "password": "admin", "display_name": "OFQ" }`
+
+
 ## Ejecutando las pruebas ⚙️
 
 _Explica como ejecutar las pruebas automatizadas para este sistema_
