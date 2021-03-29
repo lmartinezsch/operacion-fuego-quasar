@@ -34,92 +34,9 @@ En caso de que alguno de los contenedores falle:
 1) crear un network con lo siguientes datos:  
 `docker network create --gateway 172.16.1.1 --subnet 172.16.1.0/24 ofq`  
 
-3) Reemplazar el archivo .env con los siguientes datos:  
-```
-PORT=4000
-# # Mysql Live
-#DB_HOST=ofq-mysql
-DB_HOST=172.19.0.2                            # when running the app without docker
-DB_DRIVER=mysql
-API_SECRET=98hbun98h                          # Used for creating a JWT. Can be anything
-DB_USER=root
-DB_PASSWORD=root
-DB_NAME=operacion_fuego_quasar
-DB_PORT=3306
-DB_ADDRESS=172.19.0.2
-ADDRESS_SUBNET=172.19.0.0/24
-ADDRESS_GATEWAY=172.19.0.1
+3) Reemplazar los datos del archivo .env por los de .env_local
+4) Reemplazar los datos del archivo docker-compose.yml por los de docker-compose_local.yml
 
-# LOG
-LOG_LEVEL=debug
-```
-
-Y el archivo docker-compose.yml:  
-```
-version: "3"
-services:
-  app:
-    container_name: ofq-app
-    build: .
-    ports:
-      - 4000:4000
-    restart: on-failure
-    volumes:
-      - api:/usr/src/app/
-      - ./jwtsecret.key:/root/jwtsecret.key:ro
-    depends_on:
-      - ofq-mysql # Uncomment this when using mysql.
-    networks:
-      - ofq
-
-  ofq-mysql:
-    image: mysql:5.7
-    container_name: ofq-mysql
-    ports:
-      - 3306:3306
-    environment:
-      - MYSQL_ROOT_HOST=${DB_HOST}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-    volumes:
-      - database_mysql:/var/lib/mysql
-    restart: always
-    networks:
-      ofq:
-        ipv4_address: ${DB_ADDRESS}
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: ofq-phpmyadmin
-    depends_on:
-      - ofq-mysql
-    environment:
-      - PMA_HOST=ofq-mysql # Note the "mysql". Must be the name of the what you used as the mysql service.
-      - PMA_USER=${DB_USER}
-      - PMA_PORT=${DB_PORT}
-      - PMA_PASSWORD=${DB_PASSWORD}
-    ports:
-      - 9000:80
-    restart: always
-    networks:
-      - ofq
-
-volumes:
-  api:
-  database_mysql: # Uncomment this when using mysql.
-
-# Networks to be created to facilitate communication between containers
-networks:
-  ofq:
-    ipam:
-      config:
-        - driver: default
-          subnet: ${ADDRESS_SUBNET}
-          gateway: ${ADDRESS_GATEWAY}
-
-```
 
 ## REST API 🔧
 
