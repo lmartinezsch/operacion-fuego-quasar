@@ -34,7 +34,7 @@ _Esto nos levantará 3 contenedores: ofq-app, ofq-mysql y ofq-phpmyadmin_
 ```  
 
 1) crear un network con lo siguientes datos:  
-`docker network create --gateway 172.16.1.1 --subnet 172.16.1.0/24 ofq`  
+`docker network create --gateway 172.19.0.1 --subnet 172.19.0.0/24 ofq`  
 
 3) Reemplazar los datos del archivo .env por los de .env_local
 4) Reemplazar los datos del archivo docker-compose.yml por los de docker-compose_local.yml
