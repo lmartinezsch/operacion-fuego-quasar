@@ -9,11 +9,11 @@ _Estas instrucciones te permitirán obtener una copia del proyecto en funcionami
 Mira **Deployment** para conocer como desplegar el proyecto.
 
 
-### Pre-requisitos 📋
+## Pre-requisitos 📋
 
 _Debes tener instalado Docker y Docker compose para poder levantar el proyecto en tu máquina_
 
-### Instalación 🔧
+## Instalación 🔧
 
 _Clonamos el proyecto_
 ```
@@ -28,7 +28,14 @@ docker-compose up -d --build
 
 _Esto nos levantará 3 contenedores: ofq-app, ofq-mysql y ofq-phpmyadmin_
 
-_Finaliza con un ejemplo de cómo obtener datos del sistema o como usarlos para una pequeña demo_
+## REST API 🔧
+
+### PING
+Podemos corroborar si nuestra app está funcionando haciendo un GET:
+
+```
+http://localhost:4000/api/v1.0/ping/
+```
 
 ## Ejecutando las pruebas ⚙️
 
