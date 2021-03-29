@@ -8,8 +8,6 @@ import (
 
 // Migrate automigrates models using ORM
 func Migrate(db *gorm.DB) {
-	db.AutoMigrate(&User{}, &Post{}, &Satellite{}, &Position{}, &SatelliteContact{})
-	// set up foreign keys
-	db.Model(&Post{}).AddForeignKey("user_id", "users(id)", "CASCADE", "CASCADE")
+	db.AutoMigrate(&User{}, &Satellite{}, &Position{}, &SatelliteContact{})
 	fmt.Println("Auto Migration has beed processed")
 }

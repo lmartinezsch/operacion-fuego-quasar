@@ -69,10 +69,8 @@ func (service *locationService) GetLocation(distances ...float32) (x, y float32)
 		b3Sq = b3 * b3
 	)
 
-	// The system of linear equation
 	// Ax + By = C
 	// Dx + Ey = F
-
 	A := (a2 - a1)
 	B := (b2 - b1)
 	C := (r1Sq - r2Sq - a1Sq + a2Sq - b1Sq + b2Sq) / 2
@@ -84,9 +82,9 @@ func (service *locationService) GetLocation(distances ...float32) (x, y float32)
 	d1 := createMatrix(C, B, F, E)
 	d2 := createMatrix(A, C, D, F)
 
-	det := determinant(d)
-	det1 := determinant(d1)
-	det2 := determinant(d2)
+	det := getDeterminant(d)
+	det1 := getDeterminant(d1)
+	det2 := getDeterminant(d2)
 
 	if det != 0 {
 		val1 := float32(math.Round(float64(det1 / det)))
@@ -96,13 +94,13 @@ func (service *locationService) GetLocation(distances ...float32) (x, y float32)
 	return 0, 0
 }
 
-/* Create matrix for determinant */
+// Create matrix for determinant
 func createMatrix(x1, y1, x2, y2 float32) [2][2]float32 {
 	return [2][2]float32{{x1, y1}, {x2, y2}}
 }
 
-/* Determinant from 2x2 matrix */
-func determinant(mat [2][2]float32) float32 {
+// Determinant from 2x2 matrix
+func getDeterminant(mat [2][2]float32) float32 {
 	var ans float32
 	ans = mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0]
 	return ans

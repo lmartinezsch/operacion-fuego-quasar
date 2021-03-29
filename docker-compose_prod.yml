@@ -1,0 +1,64 @@
+version: "3"
+services:
+  app:
+    container_name: ofq-app
+    build: .
+    ports:
+      - 4000:4000
+    restart: on-failure
+    volumes:
+      - api:/usr/src/app/
+      - ./jwtsecret.key:/root/jwtsecret.key:ro
+    depends_on:
+      - ofq-mysql # Uncomment this when using mysql.
+    networks:
+      - ofq
+
+  ofq-mysql:
+    image: mysql:5.7
+    container_name: ofq-mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_HOST=${DB_HOST}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - database_mysql:/var/lib/mysql
+    restart: always
+    networks:
+      ofq:
+        ipv4_address: ${DB_ADDRESS}
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: ofq-phpmyadmin
+    depends_on:
+      - ofq-mysql
+    environment:
+      - PMA_HOST=ofq-mysql # Note the "mysql". Must be the name of the what you used as the mysql service.
+      - PMA_USER=${DB_USER}
+      - PMA_PORT=${DB_PORT}
+      - PMA_PASSWORD=${DB_PASSWORD}
+    ports:
+      - 9000:80
+    restart: always
+    networks:
+      - ofq
+
+volumes:
+  api:
+  database_mysql: # Uncomment this when using mysql.
+
+# Networks to be created to facilitate communication between containers
+networks:
+  ofq:
+    external:
+      true
+      #    ipam:
+      #      config:
+      #        - driver: default
+      #          subnet: ${ADDRESS_SUBNET}
+      #          gateway: ${ADDRESS_GATEWAY}
