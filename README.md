@@ -29,8 +29,10 @@ docker-compose up -d --build
 ```
 
 _Esto nos levantará 3 contenedores: ofq-app, ofq-mysql y ofq-phpmyadmin_
+```diff
+- En caso de que alguno de los contenedores falle: 
+```  
 
-En caso de que alguno de los contenedores falle: 
 1) crear un network con lo siguientes datos:  
 `docker network create --gateway 172.16.1.1 --subnet 172.16.1.0/24 ofq`  
 
